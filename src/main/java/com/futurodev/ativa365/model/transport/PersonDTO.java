@@ -11,7 +11,10 @@ public record PersonDTO(Long id,
                         String cpf,
                         LocalDate birthday,
                         String email,
-                        String cep) {
+                        String cep,
+                        String number,
+                        String street,
+                        String complement) {
 
     public PersonDTO(Person person){
         this(
@@ -21,6 +24,10 @@ public record PersonDTO(Long id,
                 person.getCpf(),
                 person.getBrithday(),
                 person.getEmail(),
-                person.getCep());
+                person.getCep(),
+                person.getNumber(),
+                person.getStreet(),
+                person.getComplement()
+        );
     }
 }
