@@ -63,6 +63,12 @@ public class Person {
         this.email = form.email();
         this.password = form.password();
         this.cep = form.cep();
+        this.number = form.number();
+        this.complement = form.complement();
+    }
+
+    public void markAsDeleted(){
+        this.deleted = true;
     }
 
 
