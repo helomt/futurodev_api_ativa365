@@ -12,5 +12,7 @@ public record CreatePersonForm(@NotBlank String name,
                                @NotNull LocalDate birthday,
                                @NotBlank String email,
                                @NotBlank String password,
-                               @NotBlank String cep) {
+                               @NotBlank String cep,
+                               String number,
+                               String complement) {
 }
