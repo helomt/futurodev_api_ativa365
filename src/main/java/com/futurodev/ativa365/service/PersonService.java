@@ -2,6 +2,7 @@ package com.futurodev.ativa365.service;
 
 import com.futurodev.ativa365.exceptions.PersonCpfAlreadyExistsException;
 import com.futurodev.ativa365.exceptions.PersonEmailAlreadyExistsException;
+import com.futurodev.ativa365.exceptions.PersonNotFoundException;
 import com.futurodev.ativa365.model.Person;
 import com.futurodev.ativa365.model.transport.CreatePersonForm;
 import com.futurodev.ativa365.model.transport.PersonDTO;
@@ -32,7 +33,14 @@ public class PersonService {
     }
 
     public Page<PersonDTO> listPaginatedPerson(Pageable pageable){
-        return this.personRepository.findAll(pageable).map(PersonDTO::new);
+        return this.personRepository.findDistinctByDeletedFalse(pageable).map(PersonDTO::new);
+    }
+
+    @Transactional
+    public void deletePerson (Long id) throws PersonNotFoundException {
+        Person personForDelete = this.personRepository.findById(id)
+                .orElseThrow(() -> new PersonNotFoundException(id));
+        personForDelete.markAsDeleted();
     }
 
 
