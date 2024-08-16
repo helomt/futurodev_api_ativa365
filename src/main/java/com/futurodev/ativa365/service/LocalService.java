@@ -8,6 +8,7 @@ import com.futurodev.ativa365.model.transport.LocalDTO;
 import com.futurodev.ativa365.repository.LocalRepository;
 import com.futurodev.ativa365.repository.PersonRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,8 +24,9 @@ public class LocalService {
     }
 
     @Transactional
-    public LocalDTO createLocal(CreateLocalForm form) throws PersonNotFoundException {
-        Person owner = this.personRepository.findByIdAndDeletedFalse(form.owner().id()).orElseThrow(() -> new PersonNotFoundException(form.owner().id()));
+    public LocalDTO createLocal(CreateLocalForm form, UserDetails userInSession) throws PersonNotFoundException {
+        Person owner = this.personRepository.findByEmailAndDeletedFalse(userInSession.getUsername())
+                .orElseThrow(() -> new PersonNotFoundException(userInSession.getUsername()));
         Local persistedLocal = this.localRepository.save(new Local(form, owner));
         return new LocalDTO(persistedLocal);
     }
