@@ -3,13 +3,16 @@ package com.futurodev.ativa365.model;
 import com.futurodev.ativa365.model.enums.GenderEnum;
 import com.futurodev.ativa365.model.transport.CreatePersonForm;
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
-public class Person {
+public class Person implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,13 +58,13 @@ public class Person {
     public Person(){
     }
 
-    public Person(CreatePersonForm form){
+    public Person(CreatePersonForm form, String password){
         this.name = form.name();
         this.gender = form.gender();
         this.cpf = form.cpf();
         this.brithday = form.birthday();
         this.email = form.email();
-        this.password = form.password();
+        this.password = password;
         this.cep = form.cep();
         this.number = form.number();
         this.complement = form.complement();
@@ -96,8 +99,38 @@ public class Person {
         return email;
     }
 
+   @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
+    }
+
     public String getPassword() {
-        return password;
+        return this.password;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return UserDetails.super.isAccountNonExpired();
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return UserDetails.super.isAccountNonLocked();
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return UserDetails.super.isCredentialsNonExpired();
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return UserDetails.super.isEnabled();
     }
 
     public String getCep() {
