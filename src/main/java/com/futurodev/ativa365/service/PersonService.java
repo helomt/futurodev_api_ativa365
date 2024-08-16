@@ -10,14 +10,20 @@ import com.futurodev.ativa365.repository.PersonRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PersonService {
+public class PersonService  implements UserDetailsService {
     private final PersonRepository personRepository;
+    private  final PasswordEncoder passwordEncoder;
 
-    public PersonService(PersonRepository personRepository) {
+    public PersonService(PersonRepository personRepository, PasswordEncoder passwordEncoder) {
         this.personRepository = personRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional
@@ -28,10 +34,12 @@ public class PersonService {
         if(this.personRepository.existsByCpf(form.cpf())){
             throw new PersonCpfAlreadyExistsException(form.cpf());
         }
-        Person persistedPerson = this.personRepository.save(new Person(form));
+        String encodedPassword = this.passwordEncoder.encode(form.password());
+        Person persistedPerson = this.personRepository.save(new Person(form, encodedPassword));
         return new PersonDTO(persistedPerson);
     }
 
+    //Puramente para consultas
     public Page<PersonDTO> listPaginatedPerson(Pageable pageable){
         return this.personRepository.findDistinctByDeletedFalse(pageable).map(PersonDTO::new);
     }
@@ -44,4 +52,14 @@ public class PersonService {
     }
 
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return this.personRepository.findByEmailAndDeletedFalse(username)
+                .orElseThrow(() -> new UsernameNotFoundException(username));
+    }
+
+    public PersonDTO getUserInSession(String email) throws PersonNotFoundException {
+        return this.personRepository.findByEmailAndDeletedFalse(email).map(PersonDTO:: new)
+                .orElseThrow(() -> new PersonNotFoundException(email));
+    }
 }
