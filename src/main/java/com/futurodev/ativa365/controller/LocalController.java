@@ -6,6 +6,8 @@ import com.futurodev.ativa365.model.transport.LocalDTO;
 import com.futurodev.ativa365.service.LocalService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,8 +28,10 @@ public class LocalController {
     }
 
     @PostMapping
-    public ResponseEntity<LocalDTO> createLocal(@RequestBody @Valid CreateLocalForm form, UriComponentsBuilder uriComponentsBuilder) throws PersonNotFoundException {
-        LocalDTO response =  this.localService.createLocal(form);
+    public ResponseEntity<LocalDTO> createLocal(@RequestBody @Valid CreateLocalForm form,
+                                                UriComponentsBuilder uriComponentsBuilder,
+                                                @AuthenticationPrincipal UserDetails userInSession) throws PersonNotFoundException {
+        LocalDTO response =  this.localService.createLocal(form, userInSession);
 
         URI uri = uriComponentsBuilder.path("/local/{id}").buildAndExpand(response.id()).toUri();
 
