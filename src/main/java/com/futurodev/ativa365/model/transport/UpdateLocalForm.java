@@ -7,9 +7,6 @@ public record UpdateLocalForm(String name,
                               String description,
                               String cep,
                               String number,
-                              String localidade,
-                              String logradouro,
-                              String uf,
                               String complement,
                               ActivityEnum activity) {
 }
