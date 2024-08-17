@@ -13,6 +13,5 @@ public record CreateLocalForm(@NotBlank String name,
                               String logradouro,
                               String uf,
                               String complement,
-                              @NotNull ActivityEnum activity,
-                              @NotNull @Valid CreateResourceWithIdentifierForm owner) {
+                              @NotNull ActivityEnum activity) {
 }
