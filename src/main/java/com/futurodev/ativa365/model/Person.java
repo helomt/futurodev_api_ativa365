@@ -2,6 +2,7 @@ package com.futurodev.ativa365.model;
 
 import com.futurodev.ativa365.model.enums.GenderEnum;
 import com.futurodev.ativa365.model.transport.CreatePersonForm;
+import com.futurodev.ativa365.model.transport.ViaCepDTO;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,7 +27,7 @@ public class Person implements UserDetails {
     @Enumerated(EnumType.STRING)
     private GenderEnum gender;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 11)
     private String cpf;
 
     @Column(nullable = false)
@@ -38,7 +39,7 @@ public class Person implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 8)
     private String cep;
 
     @Column
@@ -49,6 +50,12 @@ public class Person implements UserDetails {
 
     @Column
     private String complement;
+
+    @Column
+    private String city;
+
+    @Column
+    private String state;
 
     @Column(columnDefinition = "boolean default false")
     private boolean deleted;
@@ -81,6 +88,21 @@ public class Person implements UserDetails {
         this.cep = form.cep();
         this.number = form.number();
         this.complement = form.complement();
+    }
+
+    public Person(CreatePersonForm form, PasswordEncoder passwordEncoder, ViaCepDTO address){
+        this.name = form.name();
+        this.gender = form.gender();
+        this.cpf = form.cpf();
+        this.brithday = form.birthday();
+        this.email = form.email();
+        this.password = passwordEncoder.encode(form.password());
+        this.cep = form.cep();
+        this.number = form.number();
+        this.complement = form.complement();
+        this.street = address.logradouro();
+        this.city = address.localidade();
+        this.state = address.uf();
     }
 
     public void markAsDeleted(){
@@ -168,5 +190,13 @@ public class Person implements UserDetails {
 
     public List<Local> getLocalList() {
         return localList;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getState() {
+        return state;
     }
 }
