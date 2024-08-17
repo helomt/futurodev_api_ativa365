@@ -1,7 +1,7 @@
 package com.futurodev.ativa365.exceptions;
 
-public class PersonToBeDeletedIsNotTheCurrentUser extends Exception {
-    public PersonToBeDeletedIsNotTheCurrentUser(Long id){
+public class PersonToBeDeletedIsNotTheCurrentUserException extends Exception {
+    public PersonToBeDeletedIsNotTheCurrentUserException(Long id){
         super(String.format("The user for id %d is not the same logged in", id));
     }
 }
