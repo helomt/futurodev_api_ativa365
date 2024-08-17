@@ -1,9 +1,6 @@
 package com.futurodev.ativa365.controller;
 
-import com.futurodev.ativa365.exceptions.PersonCpfAlreadyExistsException;
-import com.futurodev.ativa365.exceptions.PersonEmailAlreadyExistsException;
-import com.futurodev.ativa365.exceptions.PersonNotFoundException;
-import com.futurodev.ativa365.exceptions.PersonToBeDeletedIsNotTheCurrentUser;
+import com.futurodev.ativa365.exceptions.*;
 import com.futurodev.ativa365.model.transport.CreatePersonForm;
 import com.futurodev.ativa365.model.transport.LoginForm;
 import com.futurodev.ativa365.model.transport.PersonDTO;
@@ -37,7 +34,7 @@ public class PersonController {
     @PostMapping
     public ResponseEntity<PersonDTO> createPerson(@RequestBody @Valid CreatePersonForm form,
                                                   UriComponentsBuilder uriComponentsBuilder)
-            throws PersonEmailAlreadyExistsException, PersonCpfAlreadyExistsException {
+            throws PersonEmailAlreadyExistsException, PersonCpfAlreadyExistsException, CepNotFoundException {
         PersonDTO response = this.personService.createPerson(form);
         URI uri = uriComponentsBuilder.path("/usuario/{id}").buildAndExpand(response.id()).toUri();
         return ResponseEntity.created(uri).body(response);
