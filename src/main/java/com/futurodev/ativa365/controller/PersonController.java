@@ -61,13 +61,13 @@ public class PersonController {
     @DeleteMapping("/{id}")
     public ResponseEntity<PersonDTO> deletePerson(@PathVariable("id") Long id,
                                                   @AuthenticationPrincipal UserDetails userInSession)
-            throws PersonNotFoundException, PersonToBeDeletedIsNotTheCurrentUser {
+            throws PersonNotFoundException, PersonToBeDeletedIsNotTheCurrentUserException {
         PersonDTO personInSession = this.personService.getUserInSession(userInSession.getUsername());
         if(Objects.equals(personInSession.id(), id)){
             this.personService.deletePerson(id);
             return ResponseEntity.noContent().build();
         } else{
-            throw new PersonToBeDeletedIsNotTheCurrentUser(id);
+            throw new PersonToBeDeletedIsNotTheCurrentUserException(id);
         }
     }
 
