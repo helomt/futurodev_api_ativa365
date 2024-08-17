@@ -1,5 +1,6 @@
 package com.futurodev.ativa365.controller;
 
+import com.futurodev.ativa365.exceptions.CepNotFoundException;
 import com.futurodev.ativa365.exceptions.LocalNotFoundException;
 import com.futurodev.ativa365.exceptions.PersonNotFoundException;
 import com.futurodev.ativa365.model.transport.CreateLocalForm;
@@ -32,7 +33,7 @@ public class LocalController {
     @PostMapping
     public ResponseEntity<LocalDTO> createLocal(@RequestBody @Valid CreateLocalForm form,
                                                 UriComponentsBuilder uriComponentsBuilder,
-                                                @AuthenticationPrincipal UserDetails userInSession) throws PersonNotFoundException {
+                                                @AuthenticationPrincipal UserDetails userInSession) throws PersonNotFoundException, CepNotFoundException {
         LocalDTO response =  this.localService.createLocal(form, userInSession);
 
         URI uri = uriComponentsBuilder.path("/local/{id}").buildAndExpand(response.id()).toUri();
@@ -64,7 +65,7 @@ public class LocalController {
     @PutMapping("/{id}")
     public ResponseEntity<LocalDTO> updateLocal(@PathVariable("id") Long id,
                                                 @RequestBody @Valid UpdateLocalForm form,
-                                                @AuthenticationPrincipal UserDetails userInSession) throws LocalNotFoundException{
+                                                @AuthenticationPrincipal UserDetails userInSession) throws LocalNotFoundException, CepNotFoundException {
         LocalDTO response = this.localService.updateLocal(id, form, userInSession);
         return ResponseEntity.ok(response);
     }
