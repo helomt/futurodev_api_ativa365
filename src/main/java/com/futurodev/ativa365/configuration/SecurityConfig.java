@@ -70,6 +70,7 @@ public class SecurityConfig {
                                 ).permitAll()
                                 .requestMatchers(HttpMethod.GET, "/usuario").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/local/all").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/cep/**").permitAll()
                                 .anyRequest().authenticated())
                 .cors(cors ->{}).build();
     }
