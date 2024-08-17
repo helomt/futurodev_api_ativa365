@@ -31,7 +31,7 @@ public class Person implements UserDetails {
     private String cpf;
 
     @Column(nullable = false)
-    private LocalDate brithday;
+    private LocalDate birthday;
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -70,7 +70,7 @@ public class Person implements UserDetails {
         this.name = form.name();
         this.gender = form.gender();
         this.cpf = form.cpf();
-        this.brithday = form.birthday();
+        this.birthday = form.birthday();
         this.email = form.email();
         this.password = password;
         this.cep = form.cep();
@@ -82,7 +82,7 @@ public class Person implements UserDetails {
         this.name = form.name();
         this.gender = form.gender();
         this.cpf = form.cpf();
-        this.brithday = form.birthday();
+        this.birthday = form.birthday();
         this.email = form.email();
         this.password = passwordEncoder.encode(form.password());
         this.cep = form.cep();
@@ -94,7 +94,7 @@ public class Person implements UserDetails {
         this.name = form.name();
         this.gender = form.gender();
         this.cpf = form.cpf();
-        this.brithday = form.birthday();
+        this.birthday = form.birthday();
         this.email = form.email();
         this.password = passwordEncoder.encode(form.password());
         this.cep = form.cep();
@@ -126,8 +126,8 @@ public class Person implements UserDetails {
         return cpf;
     }
 
-    public LocalDate getBrithday() {
-        return brithday;
+    public LocalDate getBirthday() {
+        return birthday;
     }
 
     public String getEmail() {
