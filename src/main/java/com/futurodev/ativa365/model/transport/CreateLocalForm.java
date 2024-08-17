@@ -7,11 +7,8 @@ import jakarta.validation.constraints.NotNull;
 
 public record CreateLocalForm(@NotBlank String name,
                               @NotBlank String description,
-                              @NotBlank String cep,
+                              @NotBlank  @Valid String cep,
                               String number,
-                              String localidade,
-                              String logradouro,
-                              String uf,
                               String complement,
                               @NotNull ActivityEnum activity) {
 }
