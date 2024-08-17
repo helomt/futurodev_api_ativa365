@@ -69,6 +69,7 @@ public class SecurityConfig {
                                         HttpMethod.POST, "/usuario"
                                 ).permitAll()
                                 .requestMatchers(HttpMethod.GET, "/usuario").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/local/all").permitAll()
                                 .anyRequest().authenticated())
                 .cors(cors ->{}).build();
     }
