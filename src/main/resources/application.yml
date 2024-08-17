@@ -10,3 +10,8 @@ spring:
         format_sql: true
     hibernate:
       ddl-auto: update
+security:
+  jwt:
+    token:
+      secret-key: 53cr337
+      expire-length: 3600000 #1h

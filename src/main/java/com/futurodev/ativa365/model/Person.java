@@ -5,6 +5,7 @@ import com.futurodev.ativa365.model.transport.CreatePersonForm;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -65,6 +66,18 @@ public class Person implements UserDetails {
         this.brithday = form.birthday();
         this.email = form.email();
         this.password = password;
+        this.cep = form.cep();
+        this.number = form.number();
+        this.complement = form.complement();
+    }
+
+    public Person(CreatePersonForm form, PasswordEncoder passwordEncoder){
+        this.name = form.name();
+        this.gender = form.gender();
+        this.cpf = form.cpf();
+        this.brithday = form.birthday();
+        this.email = form.email();
+        this.password = passwordEncoder.encode(form.password());
         this.cep = form.cep();
         this.number = form.number();
         this.complement = form.complement();

@@ -5,7 +5,10 @@ import com.futurodev.ativa365.exceptions.PersonEmailAlreadyExistsException;
 import com.futurodev.ativa365.exceptions.PersonNotFoundException;
 import com.futurodev.ativa365.exceptions.PersonToBeDeletedIsNotTheCurrentUser;
 import com.futurodev.ativa365.model.transport.CreatePersonForm;
+import com.futurodev.ativa365.model.transport.LoginForm;
 import com.futurodev.ativa365.model.transport.PersonDTO;
+import com.futurodev.ativa365.model.transport.TokenDTO;
+import com.futurodev.ativa365.service.AuthenticationService;
 import com.futurodev.ativa365.service.PersonService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -24,9 +27,11 @@ import java.util.Objects;
 @RequestMapping("/usuario")
 public class PersonController {
     private final PersonService personService;
+    private final AuthenticationService authenticationService;
 
-    public PersonController(PersonService personService) {
+    public PersonController(PersonService personService, AuthenticationService authenticationService) {
         this.personService = personService;
+        this.authenticationService = authenticationService;
     }
 
     @PostMapping
@@ -36,6 +41,18 @@ public class PersonController {
         PersonDTO response = this.personService.createPerson(form);
         URI uri = uriComponentsBuilder.path("/usuario/{id}").buildAndExpand(response.id()).toUri();
         return ResponseEntity.created(uri).body(response);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<TokenDTO> login(@RequestBody LoginForm form){
+        TokenDTO response = this.authenticationService.login(form);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/refresh-token")
+    public ResponseEntity<TokenDTO> refreshToken(@RequestHeader("Authorization") String refreshToken){
+        TokenDTO response = this.authenticationService.refreshToken(refreshToken);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping
@@ -55,6 +72,10 @@ public class PersonController {
         } else{
             throw new PersonToBeDeletedIsNotTheCurrentUser(id);
         }
+    }
 
+    @GetMapping("/authenticated")
+    public ResponseEntity<String> isAuthenticated(){
+        return ResponseEntity.ok("Is authenticated");
     }
 }

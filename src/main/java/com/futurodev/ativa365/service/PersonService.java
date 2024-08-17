@@ -34,8 +34,8 @@ public class PersonService  implements UserDetailsService {
         if(this.personRepository.existsByCpf(form.cpf())){
             throw new PersonCpfAlreadyExistsException(form.cpf());
         }
-        String encodedPassword = this.passwordEncoder.encode(form.password());
-        Person persistedPerson = this.personRepository.save(new Person(form, encodedPassword));
+        //String encodedPassword = this.passwordEncoder.encode(form.password());
+        Person persistedPerson = this.personRepository.save(new Person(form, this.passwordEncoder));
         return new PersonDTO(persistedPerson);
     }
 
