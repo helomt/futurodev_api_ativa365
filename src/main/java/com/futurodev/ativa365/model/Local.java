@@ -2,6 +2,7 @@ package com.futurodev.ativa365.model;
 
 import com.futurodev.ativa365.model.enums.ActivityEnum;
 import com.futurodev.ativa365.model.transport.CreateLocalForm;
+import com.futurodev.ativa365.model.transport.UpdateLocalForm;
 import jakarta.persistence.*;
 
 @Entity
@@ -61,6 +62,18 @@ public class Local {
         this.complement = form.complement();
         this.activity = form.activity();
         this.owner = owner;
+    }
+
+    public void updateAvailableAttributes(UpdateLocalForm form){
+        this.name = form.name() != null ? form.name() : this.name;
+        this.description = form.description() != null ? form.description() : this.description;
+        this.cep= form.cep() != null ? form.cep() : this.cep;
+        this.number = form.number() != null ? form.number() : this.number;
+        this.localidade = form.localidade() != null ? form.localidade() : this.localidade;
+        this.logradouro = form.logradouro() != null ? form.logradouro() : this.logradouro;
+        this.uf = form.uf() != null ? form.uf() : this.uf;
+        this.complement = form.complement() != null ? form.complement() : this.complement;
+        this.activity = form.activity() != null ? form.activity() : this.activity;
     }
 
     public void markAsDeleted(){
