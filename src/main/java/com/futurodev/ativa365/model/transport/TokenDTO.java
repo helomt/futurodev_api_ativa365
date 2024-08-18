@@ -1,14 +1,23 @@
 package com.futurodev.ativa365.model.transport;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Date;
 
+@Schema(description = "Classe para armazenar um Token de acesso")
 public class TokenDTO {
 
+    @Schema(description = "Nome de usuário cadastrado/ email do usuário", example = "john.doe@exemplo.com" )
     private String username;
+    @Schema(description = "Booleano para verificação de autenticação", example = "true")
     private Boolean authenticated;
+    @Schema(description = "Horário de criação do token", example = "2024-08-18T12:23:43.142+00:00" )
     private Date createdAt;
+    @Schema(description = "Horário de criação do token", example = "2024-08-18T13:23:43.142+00:00" )
     private Date expiresAt;
+    @Schema(description = "Horário de criação do token", example = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." )
     private String accessToken;
+    @Schema(description = "Horário de criação do token", example = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." )
     private String refreshToken;
 
     public TokenDTO(String username,
