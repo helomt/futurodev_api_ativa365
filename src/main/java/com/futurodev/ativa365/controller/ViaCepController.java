@@ -30,17 +30,10 @@ public class ViaCepController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
             description = "O endereço foi recuperado com sucesso",
-            content = {
-                    @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ViaCepDTO.class))}),
+            content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ViaCepDTO.class))}),
             @ApiResponse(responseCode = "404",
                     description = "O endereço para o CEP fornecido não foi encontrado",
-                    content = {
-                            @Content(mediaType = "application/json",
-                                    schema = @Schema(implementation = ProblemDetail.class))}),
-
-
-
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))}),
     })
     @GetMapping("/{cep}")
     public ResponseEntity<ViaCepDTO> search(@PathVariable("cep") String cep){

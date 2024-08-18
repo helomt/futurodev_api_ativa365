@@ -184,14 +184,6 @@ public class Person implements UserDetails {
         return complement;
     }
 
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    public List<Local> getLocalList() {
-        return localList;
-    }
-
     public String getCity() {
         return city;
     }

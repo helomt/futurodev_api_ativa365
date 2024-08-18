@@ -132,7 +132,4 @@ public class ControllerExceptionHandler {
         return ResponseEntity.status(httpStatus).body(problemDetail);
     }
 
-
-
-
 }

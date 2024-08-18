@@ -75,15 +75,6 @@ public class Local {
         this.owner = owner;
     }
 
-    public void updateAvailableAttributes(UpdateLocalForm form){
-        this.name = form.name() != null ? form.name() : this.name;
-        this.description = form.description() != null ? form.description() : this.description;
-        this.cep= form.cep() != null ? form.cep() : this.cep;
-        this.number = form.number() != null ? form.number() : this.number;
-        this.complement = form.complement() != null ? form.complement() : this.complement;
-        this.activity = form.activity() != null ? form.activity() : this.activity;
-    }
-
     public void updateAvailableAttributes(UpdateLocalForm form, ViaCepDTO address){
         this.name = form.name() != null ? form.name() : this.name;
         this.description = form.description() != null ? form.description() : this.description;
@@ -144,7 +135,4 @@ public class Local {
         return owner;
     }
 
-    public boolean isDeleted() {
-        return deleted;
-    }
 }

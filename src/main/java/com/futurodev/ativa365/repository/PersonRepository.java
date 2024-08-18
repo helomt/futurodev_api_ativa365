@@ -15,8 +15,6 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 
     Page<Person> findDistinctByDeletedFalse(Pageable pageable);
 
-    Optional<Person> findByIdAndDeletedFalse(Long id);
-
     Optional<Person> findByEmailAndDeletedFalse(String email);
 
 
