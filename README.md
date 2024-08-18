@@ -18,7 +18,7 @@
 
 <div align="center">
 
-[Sobre o projeto](#sobre-o-projeto) • [Funcionalidades ](#funcionalidades) • [Layout](#layout) • [Como executar](#como-executar-o-projeto) • [Tecnologias](#️tecnologias) • [Melhorias](#melhorias) • [Referência](#referência) • [Autora](#️autora) • [Licença](#licença)
+[Sobre o projeto](#sobre-o-projeto) • [Funcionalidades ](#funcionalidades) • [Demonstração](#demonstração) • [Como executar](#como-executar-o-projeto-localmente) • [API](#api) • [Local](#local) • [Person](#person)• [Cep](#cep) • [Tecnologias](#tecnologias) • [Melhorias](#melhorias) • [Referências](#referências) • [Autora](#autora) • [Licença](#licença)
 
 </div>
 
@@ -49,9 +49,11 @@ A API foi desenvolvida utilizando Spring Boot e PostgreSql
 **CEP**
 - Consulta de endereço pelo cep através do ViaCep
 
-#### Demonstração
+## Demonstração
 
-Inserir aqui o GIF
+<img src="src/main/resources/assets/videos/express.gif" alt="Funcionalidades da API">
+
+Foi incluso dentro de resource um arquivo da coleção do Postman para facilitar a correção.
 
 ## 🚀Como executar o projeto (localmente)
 
@@ -59,7 +61,6 @@ Podemos considerar este projeto como sendo divido em duas partes:
 
 1. Bando de dados (PostgresSql)
 2. Back End (API)
-
 
 ### 📋Pré-requisitos
 
@@ -140,11 +141,14 @@ Algumas rotas são públicas porém para as demais é necessária autenticação
 
 Este pode ser adquirido através do login.
 
+
+<hr>
+
 ### 📌Local
 
 <img src="src/main/resources/assets/images/screenshots/local.png" alt="API Local"/>
 
-#### Métodos
+### Métodos
 Para local foram criados os endpoints dos seguintes métodos
 
 | Método | Descrição |
@@ -155,7 +159,7 @@ Para local foram criados os endpoints dos seguintes métodos
 | `DELETE` | Remove um registro do sistema. |
 
 
-##### Retorna um local de acordo com o parâmetro
+#### Retorna um local de acordo com o parâmetro
 ```http
   GET /local/{id}
 ```
@@ -168,7 +172,7 @@ e se estiver dentro do escopo de itens do usuário*
 | `id`      | `Long` | **Obrigatório**. Identificação do registro a ser buscado |
 
 
-##### Atualiza um local de acordo com o parâmetro
+#### Atualiza um local de acordo com o parâmetro
 ```http
   PUT /local/{id}
 ```
@@ -192,7 +196,7 @@ Este método exige um corpo em que nenhum campo é obrigatório por ser alteraç
 }
 ````
 
-##### Deleta um local de acordo com o parâmetro
+#### Deleta um local de acordo com o parâmetro
 ```http
   DELETE /local/{id}
 ```
@@ -205,14 +209,14 @@ e se estiver dentro do escopo de itens do usuário*
 
 
 
-##### Busca todos locais de registrados pelo usuário
+#### Busca todos locais de registrados pelo usuário
 ```http
   GET /local
 ```
 *Esta é uma rota que necessita de autenticação e traz o item se estiver dentro do escopo de itens do usuário*
 
 
-##### Cria um novo local 
+#### Cria um novo local 
 ```http
   POST /local
 ```
@@ -230,7 +234,7 @@ Este método exige um corpo em que *number* e *complement* não são obrigatóri
 }
 ````
 
-##### Busca todos locais de registrados
+#### Busca todos locais de registrados
 Rota pública utilizada somente durante o desenvolvimento do projeto.
 
 ```http
@@ -239,11 +243,12 @@ Rota pública utilizada somente durante o desenvolvimento do projeto.
 *Esta é uma rota que **não** necessita de autenticação e traz todos os itens do banco.*
 
 
+<hr>
 
 ### 🙎🏻‍♂️Person
 <img src="src/main/resources/assets/images/screenshots/person.png" alt="API Person"/>
 
-#### Métodos
+### Métodos
 Para usuário foram criados os endpoints dos seguintes métodos
 
 | Método | Descrição                                                                   |
@@ -253,7 +258,7 @@ Para usuário foram criados os endpoints dos seguintes métodos
 | `DELETE` | Remove um registro do sistema.                                              |
 
 
-##### Busca todos os usuários cadastrados no banco
+#### Busca todos os usuários cadastrados no banco
 Rota pública utilizada somente durante o desenvolvimento do projeto.
 
 ```http
@@ -264,7 +269,7 @@ Rota pública utilizada somente durante o desenvolvimento do projeto.
 
 
 
-##### Cria um novo usuário
+#### Cria um novo usuário
 Rota pública para cadastro de novos usuários
 
 
@@ -287,7 +292,7 @@ Este método exige um corpo em que *number* e *complement* não são obrigatóri
     "complement":null
 }
 ````
-##### Renova um token de acesso do usuário
+#### Renova um token de acesso do usuário
 Rota pública
 
 ```http
@@ -296,7 +301,7 @@ Rota pública
 *Esta é uma rota que **não** necessita de autenticação, porém necessita do token válido anterior*
 
 
-##### Login de um usuário
+#### Login de um usuário
 Rota pública
 
 ```http
@@ -325,7 +330,7 @@ Será retornado os dados de acesso contendo o token:
     "refreshToken": "eyJhbGciOiJInR5cCI6IkpXVCJ9.eyJyb2xl..."
 }
 ```
-##### Verificação de autenticação
+#### Verificação de autenticação
 Rota utilizada somente durante o desenvolvimento do projeto.
 
 ```http
@@ -337,7 +342,7 @@ Rota utilizada somente durante o desenvolvimento do projeto.
 Retorna somente : **IsAuthenticated** em caso de uso do acessToken correto.
 
 
-##### Deleta um usuário de acordo com o parâmetro e autenticação
+#### Deleta um usuário de acordo com o parâmetro e autenticação
 ```http
   DELETE /usuario/{id}
 ```
@@ -349,19 +354,20 @@ e se estiver dentro do escopo do usuário*
 | `id`      | `Long` | **Obrigatório**. Identificação do registro a ser buscado |
 
 
+<hr>
 
 ### 📫Cep
 
 <img src="src/main/resources/assets/images/screenshots/cep.png" alt="API CEP"/>
 
-#### Método
+### Método
 Para cep foi criado o endpoint do seguinte método
 
 | Método | Descrição                                                            |
 |---|----------------------------------------------------------------------|
 | `GET` | Retorna informações de um registro.                                  |
 
-##### Busca dados de um endereço
+#### Busca dados de um endereço
 Rota pública.
 
 ```http
